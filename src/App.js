@@ -1,4 +1,11 @@
 import React, { Component } from "react";
+import Styled from "styled-components";
+
+const Centered = Styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+`;
 
 const App = () => {
   return (
@@ -23,60 +30,53 @@ class Sequencer extends Component {
 
   render() {
     const { clock } = this.state;
-
     const trackData = [new Array(16).fill(false), new Array(16).fill(false)];
-
-    const tracks = trackData.map((t, i) => {
-      return <Track key={i} clock={clock} trackData={t} />;
-    });
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          height: "100%",
-          backgroundColor: "purple"
-        }}
-      >
-        {tracks}
-      </div>
+      <SequencerDiv>
+        {trackData.map((t, i) => {
+          return <Track key={i} clock={clock} trackData={t} />;
+        })}
+      </SequencerDiv>
     );
   }
 }
 
 const Track = ({ clock, trackData }) => {
-  const divs = trackData.map((b, i) => {
-    const amount = i == 0 ? 0 : i / trackData.length;
-    const x = amount * 100;
-
-    return (
-      <div
-        key={i}
-        style={{
-          //   position: "absolute",
-          //   top: `${0}%`,
-          //   left: `${x}%`,
-          backgroundColor: i == clock ? "black" : "red",
-          flexBasis: "100%"
-          //   width: `5%`,
-          //   height: "100%"
-        }}
-      />
-    );
-  });
   return (
-    <div
-      style={{
-        backgroundColor: "green",
-        // position: "relative",
-        display: "flex",
-        flexBasis: "100%"
-      }}
-    >
-      {divs}
-    </div>
+    <TrackDiv>
+      {trackData.map((b, i) => (
+        <TrackCell key={i}>
+          <TrackCellHighlightDiv />
+        </TrackCell>
+      ))}
+    </TrackDiv>
   );
 };
+
+const SequencerDiv = Styled.div`
+display: grid;
+grid-template-rows: 30% 70%;
+width: 100%;
+height: 100%;
+backgroundColor: purple;
+`;
+
+const TrackDiv = Styled.div`
+display: flex;
+`;
+
+const TrackCell = Styled.div`
+width: 100%;
+height: 100%;
+// position: relative;
+background-color: green;
+border: 1px solid black
+// padding: 10px
+`;
+
+const TrackCellHighlightDiv = Styled.div`
+background-color: orange;
+// height: 100%;
+`;
 
 export default App;
