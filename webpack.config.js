@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   entry: ["./src/index.js"],
   output: {
@@ -28,5 +30,13 @@ module.exports = {
     publicPath: "/",
     contentBase: "./dist"
   },
-  devtool: "source-map"
+  devtool: "source-map",
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, "src/"),
+      Redux: path.resolve(__dirname, "src/Redux"),
+      Components: path.resolve(__dirname, "src/Components"),
+      Audio: path.resolve(__dirname, "src/Audio")
+    }
+  }
 };
